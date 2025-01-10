@@ -108,6 +108,7 @@ src
 ├───hooks
 ├───i18n
 │   └───languages
+├───services
 ├───interfaces
 ├───stores
 ├───themes
@@ -123,6 +124,7 @@ src
 * **`enums`**: Define constantes organizadas como enums, permitindo maior legibilidade e evitando valores mágicos no código.  
 * **`hooks`**: Contém hooks personalizados que encapsulam lógica reutilizável e abstraem funcionalidades específicas.  
 * **`i18n`**: Diretório responsável pela internacionalização, contendo a configuração principal e os arquivos de tradução dentro da subpasta `languages`.  
+* **`services`**: Camada de serviço, contem todas as chamadas a api externas
 * **`interfaces`**: Declarações de tipos e interfaces do TypeScript para garantir tipagem e segurança no desenvolvimento.  
 * **`stores`**: Implementação de estados globais ou locais, usando bibliotecas como Zustand, Context API ou outra solução de gerenciamento de estado.  
 * **`themes`**: Define estilos globais, temas de cores e configurações de design para manter a consistência visual do aplicativo.  
