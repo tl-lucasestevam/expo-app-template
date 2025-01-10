@@ -1,26 +1,27 @@
 {
-    "recommendations": [
-        "streetsidesoftware.code-spell-checker-portuguese-brazilian",
-        "streetsidesoftware.code-spell-checker",
-        "naumovs.color-highlight",
-        "editorconfig.editorconfig",
-        "usernamehw.errorlens",
-        "gruntfuggly.todo-tree",
-        "formulahendry.auto-close-tag",
-        "formulahendry.auto-rename-tag",
-        "biomejs.biome",
-        "expo.vscode-expo-tools",
-        "wix.vscode-import-cost",
-        "simonsiefke.svg-preview",
-        "styled-components.vscode-styled-components",
-        "lokalise.i18n-ally",
-        "redhat.vscode-yaml",
-        "davidanson.vscode-markdownlint",
-        "leonardssh.vscord",
-        "ryanluker.vscode-coverage-gutters"
-    ],
-    "unwantedRecommendations": [
-        "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode"
-    ]
+	"recommendations": [
+		"streetsidesoftware.code-spell-checker-portuguese-brazilian",
+		"streetsidesoftware.code-spell-checker",
+		"naumovs.color-highlight",
+		"editorconfig.editorconfig",
+		"usernamehw.errorlens",
+		"gruntfuggly.todo-tree",
+		"formulahendry.auto-close-tag",
+		"formulahendry.auto-rename-tag",
+		"biomejs.biome",
+		"expo.vscode-expo-tools",
+		"wix.vscode-import-cost",
+		"simonsiefke.svg-preview",
+		"styled-components.vscode-styled-components",
+		"lokalise.i18n-ally",
+		"redhat.vscode-yaml",
+		"davidanson.vscode-markdownlint",
+		"leonardssh.vscord",
+		"ryanluker.vscode-coverage-gutters",
+		"github.vscode-github-actions"
+	],
+	"unwantedRecommendations": [
+		"dbaeumer.vscode-eslint",
+		"esbenp.prettier-vscode"
+	]
 }
