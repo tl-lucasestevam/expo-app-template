@@ -1,0 +1,23 @@
+name: Build app and upload to stores
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Set Release Type (path, minor, major or keep)'
+        required: true
+        default: 'keep'
+        type: choice
+        options:
+          - keep
+          - path
+          - minor
+          - major
+      profile:
+        description: 'Set profile'
+        required: true
+        default: 'preview'
+        type: choice
+        options:
+          - preview
+          - production
