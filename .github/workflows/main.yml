@@ -45,7 +45,7 @@ jobs:
 
       - name: Increment Android and iOS build numbers
         run: |
-          current_version=$(grep "versionName" android/app/build.gradle | sed -E 's/.*"(.*)"/\1/')
+          current_version=$(grep "versionName" ./android/app/build.gradle | sed -E 's/.*"(.*)"/\1/')
 
           if [[ "${{ github.event.inputs.release_type }}" != "keep" ]]; then
             IFS='.' read -r major minor patch <<< "${current_version}"
