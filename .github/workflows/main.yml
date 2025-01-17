@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       release_type:
-        description: 'Set Release Type (path, minor, major or keep)'
+        description: "Set Release Type (path, minor, major or keep)"
         required: true
-        default: 'keep'
+        default: "keep"
         type: choice
         options:
           - keep
@@ -14,9 +14,9 @@ on:
           - minor
           - major
       profile:
-        description: 'Set profile'
+        description: "Set profile"
         required: true
-        default: 'preview'
+        default: "preview"
         type: choice
         options:
           - preview
@@ -39,6 +39,9 @@ jobs:
 
       - name: Install node modules
         run: yarn install
+
+      - name: List repository files
+        run: ls -R
 
       - name: Increment Android and iOS build numbers
         run: |
