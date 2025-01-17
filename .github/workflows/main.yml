@@ -21,3 +21,85 @@ on:
         options:
           - preview
           - production
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v4
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-node-20.x-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-20.x-yarn-
+
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install node modules
+        run: yarn install --frozen-lockfile
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Increment Android and iOS build numbers
+        run: |
+          current_version=$(grep "versionName" android/app/build.gradle | sed -E 's/.*"(.*)"/\1/')
+
+          if [[ "${{ github.event.inputs.release_type }}" != "keep" ]]; then
+            IFS='.' read -r major minor patch <<< "${current_version}"
+
+            case "${{ github.event.inputs.release_type }}" in
+              path)
+                patch=$((patch + 1))
+                ;;
+              minor)
+                minor=$((minor + 1))
+                patch=0
+                ;;
+              major)
+                major=$((major + 1))
+                minor=0
+                patch=0
+                ;;
+            esac
+
+            new_version="${major}.${minor}.${patch}"
+            echo "New Version: $new_version"
+
+            if [[ "$new_version" > "$current_version" ]]; then
+              sed -i '' -E "s/versionCode ([0-9]+)/echo 'versionCode $((\1 + 1))'/" android/app/build.gradle
+              sed -i '' -E "s/versionName \".*\"/versionName \"${new_version}\"/" android/app/build.gradle
+
+              plutil -replace CFBundleVersion -string $(( $(/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" ios/App/App.xcodeproj/project.pbxproj) + 1 )) ios/App/App/Info.plist
+              plutil -replace CFBundleShortVersionString -string "${new_version}" ios/App/App/Info.plist
+            else
+              echo "New version must be greater than current version. Exiting."
+              exit 1
+            fi
+          fi
+
+      - name: Commit updated version files
+        if: ${{ github.event.inputs.release_type != 'keep' }}
+        run: |
+          git config --local user.name "github-actions"
+          git config --local user.email "actions@github.com"
+          git add android/app/build.gradle ios/App/App/Info.plist
+          git commit -m "chore: update app versions to ${new_version}"
+          git push
