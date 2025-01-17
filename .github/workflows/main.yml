@@ -38,7 +38,7 @@ jobs:
           node-version: 20
 
       - name: Install node modules
-        run: pnpm install
+        run: yarn install
 
       - name: Increment Android and iOS build numbers
         run: |
